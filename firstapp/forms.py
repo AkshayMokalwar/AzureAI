@@ -5,7 +5,7 @@ from django import forms
 class ChatForm(forms.Form):
     message = forms.CharField(label='Your Message', max_length=1000, widget=forms.TextInput(attrs={
         'class': 'form-control',
-        'placeholder': "Enter your message",
+        'placeholder': "Ask Anything About Law",
         'aria-label': "Your message",
         'aria-describedby': "button-addon2"
     }))

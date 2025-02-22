@@ -28,7 +28,7 @@
         }
         .right-content {
             flex: 1;
-            background-image: url('/static/chatbt/bg/bgimage.png'); /* Replace with your image URL */
+            background-image: url('/static/chatbt/bg/bgimage.jpg'); /* Replace with your image URL */
             background-size: cover;
             background-position: center;
         }
@@ -53,11 +53,19 @@
         }
     </style>
 </head>
-<body>
+<body class="container-fluid">
+{%if s_msg  %}<div class="alert alert-success" role="alert">{{s_msg}}</div>
+{% endif %}
+
+{%if f_msg  %}
+    <div class="alert alert-danger" role="alert">{{f_msg}}</div>
+{% endif %}
 
 <div class="coming-soon-container">
     <div class="left-content">
-        <div class="logo">AI Application</div>
+        <div class="logo">
+            <img src="/static/chatbt/logo/logo.jpg" width="40%"> 
+            </div>
         <h1>We are Coming Soon</h1>
         <p>You can subscribe to our mailing list so you can be notified when things are livelier</p>
 

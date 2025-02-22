@@ -46,7 +46,7 @@ def chatbot(request):
     if request.method == 'GET':
         messages = ChatMessage.objects.all() #Get all messages
         form = ChatForm()
-        return render(request, 'chatbt/chatbot3.html', {'messages': messages,'form': form, })
+        return render(request, 'chatbt/chatbot.html', {'messages': messages,'form': form, })
     if request.method == 'POST':
         form = ChatForm(request.POST)
         if form.is_valid():
@@ -60,7 +60,7 @@ def chatbot(request):
             ChatMessage.objects.create(sender='bot', message=response).save() #save bot responses
         # form = ChatForm()
 
-        return redirect('/chatbot/test2/')
+        return redirect('/Qlaws/test2/')
 
 
 def chatbot_view(request):

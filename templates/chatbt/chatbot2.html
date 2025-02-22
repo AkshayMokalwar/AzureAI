@@ -61,7 +61,8 @@
         <h1>We are Coming Soon</h1>
         <p>You can subscribe to our mailing list so you can be notified when things are livelier</p>
 
-        <form class="subscribe-form">
+        <form class="subscribe-form"method="post">
+            {% csrf_token %}
             <div class="mb-3">
                 <label for="email" class="form-label">Email</label>
                 <input type="email" class="form-control" name="email" id="email" placeholder="example@gmail.com">

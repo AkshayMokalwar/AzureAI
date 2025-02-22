@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from .forms import ChatForm
 from .models import Subscriber  # Import your Subscriber model
-
+from datetime import datetime 
 import openai
 from django.conf import settings
 from langchain.llms import AzureOpenAI
@@ -32,7 +32,7 @@ def chatbot_view(request):
         print("#"*20)
         print(f" email : {email}")
         if email:  # Basic validation
-            sub=Subscriber.objects.create(email=email)  # Create a new Subscriber object
+            sub=Subscriber.objects.create(email=email,subscribed_at=datetime.now())  # Create a new Subscriber object
             sub.save()
 
             return HttpResponse("Thank you for subscribing!") # or redirect, or render a success page

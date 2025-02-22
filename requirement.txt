@@ -1,0 +1,61 @@
+aiohappyeyeballs @ file:///C:/b/abs_e9fm5mk6ak/croot/aiohappyeyeballs_1734469429350/work
+aiohttp @ file:///C:/b/abs_d4_gdjffav/croot/aiohttp_1734687146788/work
+aiosignal @ file:///tmp/build/80754af9/aiosignal_1637843061372/work
+annotated-types @ file:///C:/b/abs_0dmaoyhhj3/croot/annotated-types_1709542968311/work
+anyio @ file:///C:/b/abs_31grv7a7bl/croot/anyio_1729121290992/work
+asgiref @ file:///C:/b/abs_ae1n0p_8_w/croot/asgiref_1724072476516/work
+attrs @ file:///C:/b/abs_89hmquz5ga/croot/attrs_1734533130810/work
+Brotli @ file:///C:/b/abs_c415aux9ra/croot/brotli-split_1736182803933/work
+certifi @ file:///C:/b/abs_8a944p1_gn/croot/certifi_1738623753421/work/certifi
+charset-normalizer @ file:///croot/charset-normalizer_1721748349566/work
+click @ file:///C:/Users/dev-admin/perseverance-python-buildout/croot/click_1699473800648/work
+colorama @ file:///C:/Users/dev-admin/perseverance-python-buildout/croot/colorama_1699472650914/work
+dataclasses-json @ file:///C:/b/abs_395krnbkif/croot/dataclasses-json_1715264816394/work
+distro @ file:///C:/b/abs_71xr36ua5r/croot/distro_1714488282676/work
+Django @ file:///C:/b/abs_d8jy6px5xv/croot/django_1731616483677/work
+frozenlist @ file:///C:/b/abs_06ctmb1zeo/croot/frozenlist_1730903113463/work
+greenlet @ file:///C:/b/abs_bbl_18a2tm/croot/greenlet_1733860081977/work
+h11 @ file:///C:/b/abs_1czwoyexjf/croot/h11_1706652332846/work
+httpcore @ file:///C:/b/abs_55n7g233bw/croot/httpcore_1706728507241/work
+httpx @ file:///C:/b/abs_43e135shby/croot/httpx_1723474830126/work
+httpx-sse @ file:///C:/b/abs_35vrjlkfq0/croot/httpx-sse_1734629697200/work
+idna @ file:///C:/b/abs_aad84bnnw5/croot/idna_1714398896795/work
+jiter @ file:///C:/b/abs_acsxrw36a6/croot/jiter_1729808947806/work
+jsonpatch @ file:///C:/b/abs_4fdm88t7zi/croot/jsonpatch_1714483974578/work
+jsonpointer==2.1
+langchain==0.3.19
+langchain-community==0.3.18
+langchain-core==0.3.37
+langchain-text-splitters==0.3.6
+langsmith @ file:///C:/b/abs_0flvoxfvjo/croot/langsmith_1733128103981/work/python
+marshmallow @ file:///C:/Users/dev-admin/perseverance-python-buildout/croot/marshmallow_1699484766606/work
+mkl-service==2.4.0
+mkl_fft @ file:///C:/Users/dev-admin/mkl/mkl_fft_1730823082242/work
+mkl_random @ file:///C:/Users/dev-admin/mkl/mkl_random_1730822522280/work
+multidict @ file:///C:/b/abs_19e3ubo2ew/croot/multidict_1730905504444/work
+mypy-extensions @ file:///C:/Users/dev-admin/perseverance-python-buildout/croot/mypy_extensions_1699482634516/work
+numpy @ file:///C:/b/abs_0123vcxhf8/croot/numpy_and_numpy_base_1725470331966/work/dist/numpy-2.0.1-cp312-cp312-win_amd64.whl#sha256=e3e9d7fcaa32e9aa86aa46a7191a47fc4c4b35942462bbbedd17c45ef934dccd
+openai @ file:///C:/b/abs_fbl6noof_d/croot/openai_1738233380947/work
+orjson @ file:///C:/b/abs_83d889opxx/croot/orjson_1737041235063/work
+packaging @ file:///C:/b/abs_3by6s2fa66/croot/packaging_1734472138782/work
+propcache @ file:///C:/b/abs_d6o8xbonwb/croot/propcache_1732304003668/work
+pydantic @ file:///C:/b/abs_27dx58x550/croot/pydantic_1734736090499/work
+pydantic-settings @ file:///C:/b/abs_fe1okp6jbe/croot/pydantic-settings_1730800848545/work
+pydantic_core @ file:///C:/b/abs_bdosz7qwys/croot/pydantic-core_1734726071532/work
+PySocks @ file:///C:/Users/dev-admin/perseverance-python-buildout/croot/pysocks_1699473336188/work
+python-dotenv @ file:///C:/Users/dev-admin/perseverance-python-buildout/croot/python-dotenv_1699475097728/work
+PyYAML @ file:///C:/b/abs_14xkfs39bx/croot/pyyaml_1728657968772/work
+requests @ file:///C:/b/abs_c3508vg8ez/croot/requests_1731000584867/work
+requests-toolbelt @ file:///C:/Users/dev-admin/perseverance-python-buildout/croot/requests-toolbelt_1699475466775/work
+setuptools==75.8.0
+sniffio @ file:///C:/b/abs_3akdewudo_/croot/sniffio_1705431337396/work
+SQLAlchemy @ file:///C:/b/abs_1au3ykwdxx/croot/sqlalchemy_1736565056929/work
+sqlparse @ file:///C:/b/abs_68npyz0s6_/croot/sqlparse_1734704476369/work
+tenacity @ file:///C:/b/abs_1749lsqys6/croot/tenacity_1730304400080/work
+tqdm @ file:///C:/b/abs_0eh9b6xugj/croot/tqdm_1738945553987/work
+typing-inspect @ file:///C:/Users/dev-admin/perseverance-python-buildout/croot/typing_inspect_1699545548175/work
+typing_extensions @ file:///C:/b/abs_0ffjxtihug/croot/typing_extensions_1734714875646/work
+urllib3 @ file:///C:/b/abs_7bst06lizn/croot/urllib3_1737133657081/work
+wheel==0.45.1
+win-inet-pton @ file:///C:/Users/dev-admin/perseverance-python-buildout/croot/win_inet_pton_1699472992992/work
+yarl @ file:///C:/b/abs_281qby2vim/croot/yarl_1732546854547/work

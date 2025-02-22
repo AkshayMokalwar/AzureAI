@@ -126,7 +126,7 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-
+message="first msg"
 # Azure OpenAI settings
 AZURE_OPENAI_API_KEY = "your_azure_openai_api_key"
 AZURE_OPENAI_ENDPOINT = "your_azure_openai_endpoint"

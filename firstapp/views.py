@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.http import HttpResponse,JsonResponse
 from django.shortcuts import render,redirect
 from .forms import ChatForm
 from .models import Subscriber , ChatMessage
@@ -9,27 +9,84 @@ from django.conf import settings
 from langchain.llms import AzureOpenAI
 from langchain.prompts import PromptTemplate
 from langchain.chains import LLMChain
+from django.views.decorators.csrf import csrf_exempt
+import json
 
+def get_azureopenai_response(msg):
+    # openai.api_type = "azure"
+    # openai.api_base = settings.AZURE_OPENAI_ENDPOINT
+    # openai.api_version = "2023-05-15"
+    # openai.api_key = settings.AZURE_OPENAI_API_KEY
+
+    # llm = AzureOpenAI(
+    #     deployment_name=settings.AZURE_OPENAI_DEPLOYMENT_NAME,
+    #     model_name="gpt-3.5-turbo",
+    #     openai_api_key=settings.AZURE_OPENAI_API_KEY,
+    #     openai_api_base=settings.AZURE_OPENAI_ENDPOINT,
+    #     openai_api_type="azure",
+    #     openai_api_version = "2023-05-15",
+    # )
+
+    # prompt = PromptTemplate(
+    #     input_variables=["user_input"],
+    #     template="You are a helpful assistant. Answer the following question: {user_input}",
+    # )
+
+    # chain = LLMChain(llm=llm, prompt=prompt)
+
+    # response_text = chain.run(message)
+    return "reply  "+msg
+
+def get_bot_response(request):
+    messages = ChatMessage.objects.all() 
+    if request.method == 'GET':
+        data = {
+            'message': 'This is a GET request response.',
+            'status': 'success',
+            'items': [
+                {'id': 1, 'name': 'Item 1'},
+                {'id': 2, 'name': 'Item 2'},
+            ],
+        }
+        return JsonResponse(data)
+
+    elif request.method == 'POST':
+        message = request.POST.get('message')
+
+        # print(message)
+        if message:
+            # Your bot logic here (replace with your actual implementation)
+            # bot_response = f"bot: You said: {message}"  # Example response
+            ChatMessage.objects.create(sender='user', message=message).save() #save user msg
+
+            bot_response = get_azureopenai_response(message)
+            
+            if bot_response:
+                ChatMessage.objects.create(sender='bot', message=bot_response).save() #save bot responses
+            
+            return JsonResponse({'bot_response': f"bot : {bot_response}"})
+        else:
+            return JsonResponse({'error': 'Message not provided.'}, status=400)
+    else:
+        return JsonResponse({'error': 'Invalid request method.'}, status=400)
 
 def comming_soon(request):
-    response_text = ""
+    messages = ChatMessage.objects.all() 
     if request.method == 'POST':
         # form = ChatForm(request.POST)
-        response_text ="HI"
         email = request.POST.get('email')
         print("#"*20)
         print(f" email : {email}")
         if email:  # Basic validation
             sub=Subscriber.objects.create(email=email,subscribed_at=datetime.now())  # Create a new Subscriber object
             sub.save()
-
             success_msg="Thank you for subscribing!"# or redirect, or render a success page
-            render(request, 'chatbt/chatbot2.html',{'s_msg':success_msg})
+            render(request, 'chatbt/chatbot2_change.html',{'s_msg':success_msg})
         else:
             failed_msg="Please enter a valid email."
-            render(request, 'chatbt/chatbot2.html',{'f_msg':failed_msg})
-        
-    return render(request, 'chatbt/chatbot2.html')
+            render(request, 'chatbt/chatbot2_change.html',{'f_msg':failed_msg})
+    
+    return render(request, 'chatbt/chatbot2_change.html',{'messages': messages})
 
 
 def generate_chatbot_response(user_message):

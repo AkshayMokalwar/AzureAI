@@ -19,18 +19,14 @@
         .social-icons { margin-top: 30px; font-size: 1.5rem; }
         .social-icons a { margin-right: 15px; color: #333; }
         .copyright { margin-top: auto; }
-        .modal.left-bottom { position: fixed; bottom: 20px; left: 20px; margin: 0; z-index: 1050; }
-        .modal-dialog { margin: 0; }
-        .modal-content { width: 300px; }
-        #support { margin-left: 90%; }
         /* Chatbot Styles */
-        .chat-container { position: fixed; bottom: 60px; right: 20px; width: 350px; border: 1px solid #dee2e6; border-radius: 8px; display: none; flex-direction: column; background-color: white; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); }
-        .chat-header { background-color: #007bff; color: white; padding: 0.5rem; display: flex; justify-content: space-between; align-items: center; }
+        .chat-container { position: fixed; bottom: 60px; right: 20px; width: 350px; border: 1px solid #3d3200; border-radius: 8px; display: none; flex-direction: column; background-color: white; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); }
+        .chat-header { background-color: #ffaa00; color: rgb(0, 0, 0); padding: 0.5rem; display: flex; justify-content: space-between; align-items: center; }
         .chat-body { padding: 1rem; flex-grow: 1; overflow-y: auto; height: 300px; }
         .chat-input { padding: 1rem; border-top: 1px solid #dee2e6; display: flex; }
         .chat-message { margin-bottom: 0.5rem; padding: 0.75rem; border-radius: 0.25rem; display: inline-block; max-width: 80%; }
-        .user-message { background-color: #e0f7fa; align-self: flex-end; }
-        .bot-message { background-color: #f0f0f0; align-self: flex-start; }
+        .user-message { background-color: #c8f2f8; align-self: flex-end; }
+        .bot-message { background-color: #faee9c; align-self: flex-start; }
         .chat-toggle { position: fixed; bottom: 20px; right: 20px; border-radius: 50%; z-index: 1000; }
     </style>
 </head>
@@ -63,10 +59,10 @@
         </div>
         <div class="right-content"></div>
     </div>
-    <section>
+    <section >
         <button class="chat-toggle btn btn-warning"><i class="fas fa-info-circle" style="font-size:40px;color: #ffffff;"></i></button>
-        <div class="chat-container">
-            <div class="chat-header bg-primary text-white p-2 d-flex justify-content-between align-items-center">
+        <div class="chat-container ">
+            <div class="chat-header bg-warning  p-2 d-flex justify-content-between align-items-center">
                 <span>Support Chat</span>
                 <button class="close-chat btn-close btn-close-white" aria-label="Close"></button>
             </div>
@@ -99,7 +95,7 @@
             function sendMessage() {
                 const message = $('#message-input').val().trim();
                 if (message) {
-                    $('#chat-body').append(`<div class="user-message chat-message">${message}</div>`);
+                    $('#chat-body').append(`<br><div class="user-message chat-message">user :${message}</div>`);
                     $('#message-input').val('');
         
                     $.ajax({
@@ -108,12 +104,12 @@
                         data: { 'message': message, 'csrfmiddlewaretoken': '{{ csrf_token }}' },
                         dataType: 'json',
                         success: function(response) {
-                            $('#chat-body').append(`<div class="bot-message chat-message">${response.bot_response}</div>`);
+                            $('#chat-body').append(`<br><div class="bot-message chat-message">${response.bot_response}</div>`);
                             $('#chat-body').scrollTop($('#chat-body')[0].scrollHeight);
                         },
                         error: function(xhr, status, error) {
                             console.error("Error fetching bot response:", status, error);
-                            $('#chat-body').append(`<div class="bot-message chat-message">Sorry, I encountered an error. Please try again later.</div>`);
+                            $('#chat-body').append(`<br><div class="bot-message chat-message">Sorry, I encountered an error. Please try again later.</div>`);
                             $('#chat-body').scrollTop($('#chat-body')[0].scrollHeight);
                         },
                         complete: function(){

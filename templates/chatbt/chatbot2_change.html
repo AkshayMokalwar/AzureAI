@@ -25,28 +25,37 @@
         .chat-body { padding: 1rem; flex-grow: 1; overflow-y: auto; height: 300px; }
         .chat-input { padding: 1rem; border-top: 1px solid #dee2e6; display: flex; }
         .chat-message { margin-bottom: 0.5rem; padding: 0.75rem; border-radius: 0.25rem; display: inline-block; max-width: 80%; }
-        .user-message { background-color: #c8f2f8; align-self: flex-end; }
-        .bot-message { background-color: #faee9c; align-self: flex-start; }
-        .chat-toggle { position: fixed; bottom: 20px; right: 20px; border-radius: 50%; z-index: 1000; }
+        .user-message { background-color: #c8f2f8; align-self: flex-end;  float: right;}
+        .bot-message { background-color: #faee9c; align-self: flex-start; } 
+        
+        .chat-toggle { position: fixed; bottom: 20px; right: 20px; border-radius: 50%; z-index: 1000; }/* Responsive Adjustments */
+        @media (min-width: 500px) {
+            .left-content, .right-content { flex: 1; display: flexbox;} /* Split on larger screens */
+            .left-content { padding: 50px; }
+            .logo { text-align: left; display: contents;}
+            .social-icons { text-align: left; }
+            .copyright { text-align: left; }
+        }
     </style>
 </head>
-<body class="container-fluid">
+<body class="container-fluid ">
     {% if s_msg %}<div class="alert alert-success" role="alert">{{s_msg}}</div>{% endif %}
     {% if f_msg %}<div class="alert alert-danger" role="alert">{{f_msg}}</div>{% endif %}
-    <div class="coming-soon-container">
-        <div class="left-content">
-            <div class="logo"><img src="/static/chatbt/logo/logo.jpg" width="40%"></div>
-            <h1>We are Coming Soon</h1>
-            <p>You can subscribe to our mailing list so you can be notified when things are livelier</p>
+    <div class="coming-soon-container row">
+       
+        <div class="left-content  col-lg-6 col-sm-12">
+            <div class="logo"><img src="/static/chatbt/logo/logo.jpg" width="40%" class="mx-auto d-block"></div>
+            <h1 class="text-center text-md-start">We are Coming Soon</h1>
+            <p class="text-center text-md-start">You can subscribe to our mailing list so you can be notified when things are livelier</p>
             <form class="subscribe-form" method="post">
                 {% csrf_token %}
                 <div class="mb-3">
                     <label for="email" class="form-label">Email</label>
                     <input type="email" class="form-control" name="email" id="email" placeholder="example@gmail.com">
                 </div>
-                <button type="submit" class="btn btn-warning">Join Now</button>
+                <button type="submit" class="btn btn-warning d-block mx-auto mx-md-0">Join Now</button>
             </form>
-            <div class="social-icons">
+            <div class="social-icons text-center text-md-start">
                 You can also follow us on
                 <a href="#" target="_blank"><i class="fab fa-facebook-f" style="color: #1877F2;"></i></a>
                 <a href="#" target="_blank"><i class="fab fa-twitter" style="color: #1DA1F2;"></i></a>
@@ -55,10 +64,12 @@
                 <a href="#" target="_blank"><i class="fab fa-linkedin-in" style="color: #0A66C2;"></i></a>
                 <a href="#" target="_blank"><i class="fab fa-github" style="color: #333;"></i></a>
             </div>
-            <div class="copyright">&copy; Copyrights Qlaws | All Rights Reserved</div>
+            <div class="copyright text-center text-md-start">&copy; Copyrights Qlaws | All Rights Reserved</div>
         </div>
-        <div class="right-content"></div>
+        <div class="right-content col-lg-6
+        +687 col-sm-12" style="background-image: url('/static/chatbt/bg/bgimage.jpg'); background-size: cover; background-position: center; min-height: 300px;"></div>
     </div>
+
     <section >
         <button class="chat-toggle btn btn-warning"><i class="fas fa-info-circle" style="font-size:40px;color: #ffffff;"></i></button>
         <div class="chat-container ">

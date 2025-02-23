@@ -10,6 +10,9 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/bootstrap-chat.min.css" />
     <style>
+            body, p, h1, h2, h3, h4, h5, h6, span, a, li, button, input, textarea, select {
+            font-family: "Fraunces", serif; /* Add a fallback serif font */
+            }
         .chat-container {
             position: fixed;
             bottom: 60px;
@@ -27,8 +30,8 @@
             overflow: hidden; 
             /* Prevent content overflow outside the container */
         }
+        </style>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         .coming-soon-container { display: flex; height: 100vh; }
         .left-content { flex: 1; padding: 50px; display: flex; flex-direction: column; justify-content: center; }
         .right-content { flex: 1; background-image: url('/static/chatbt/bg/bgimage.jpg'); background-size: cover; background-position: center; }

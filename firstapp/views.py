@@ -39,7 +39,19 @@ def get_azureopenai_response(msg):
 
 def get_bot_response(request):
     messages = ChatMessage.objects.all() 
+    print(f" last msg  : {messages}")
+    # Get the user's IP address
+    
     if request.method == 'GET':
+        ip_address = request.session.session_key
+
+        # # In case of proxies, you might need to check HTTP_X_FORWARDED_FOR
+        # x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+        # if x_forwarded_for:
+        #     ip_address = x_forwarded_for.split(',')[0]  # Get the first IP from the list
+        # else:
+        #     ip_address = request.META.get('REMOTE_ADDR')
+      
         data = {
             'message': 'This is a GET request response.',
             'status': 'success',
@@ -52,14 +64,30 @@ def get_bot_response(request):
 
     elif request.method == 'POST':
         message = request.POST.get('message')
+        
 
         # print(message)
         if message:
             # Your bot logic here (replace with your actual implementation)
             # bot_response = f"bot: You said: {message}"  # Example response
+            
             ChatMessage.objects.create(sender='user', message=message).save() #save user msg
-
-            bot_response = get_azureopenai_response(message)
+            if '1'  in message or message.strip()=='1':
+                bot_response="""<ol type="I">
+                                    <li>Company Details</li>
+                                    <li>Our Services</li>
+                                    <li>Contact Us</li>
+                                    <li>Back to Main Menu</li>
+                                </ol>"""
+            elif '2'  in message or message.strip()=='2':
+                    bot_response="""<ol type="I">
+                                        <li>Company Details</li>
+                                        <li>Our Services</li>
+                                        <li>Contact Us</li>
+                                        <li>Back to Main Menu</li>
+                                    </ol>"""
+            else:
+                bot_response = get_azureopenai_response(message)
             
             if bot_response:
                 ChatMessage.objects.create(sender='bot', message=bot_response).save() #save bot responses

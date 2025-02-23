@@ -83,9 +83,18 @@
                         <div class="{{obj.sender}}-message chat-message">{{obj.sender}} : {{obj.message}}</div><br>
                     {% endfor %}
                 {% endif %}
-                <div class="bot-message chat-message">Hello! How can I help you?</div>
+                
+                <div class="bot-message chat-message">Hello! How can I help you?
+                    <ol>
+                        <li>Information</li>
+                        <li>Help</li>
+                        <li>Fun</li>
+                        <li>Exit</li>
+                      </ol>
+                </div>
             </div>
             <div class="chat-input d-flex">
+
                 <input type="text" id="message-input" class="form-control me-2" placeholder="Type your message...">
                 <button class="btn btn-primary" id="send-button">Send</button>
             </div>

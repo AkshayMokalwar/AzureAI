@@ -85,46 +85,134 @@
         </div>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-        <script >
-        $(document).ready(function() {
-            $('.chat-toggle').click(function() {
-                $('.chat-container').toggle();
-            });
-            $('.close-chat').click(function() {
-                $('.chat-container').hide();
-            });
-            $('#send-button').click(sendMessage);
-            $('#message-input').keypress(function(e) { if (e.key === 'Enter') sendMessage(); });
+        <script>
+            $(document).ready(function() {
+                $('.chat-toggle').click(function() {
+                    $('.chat-container').toggle();
+                });
+                $('.close-chat').click(function() {
+                    $('.chat-container').hide();
+                });
+                $('#send-button').click(sendMessage);
+                $('#message-input').keypress(function(e) { if (e.key === 'Enter') sendMessage(); });
         
-            function sendMessage() {
-                const message = $('#message-input').val().trim();
-                if (message) {
-                    $('#chat-body').append(`<div class="user-message chat-message">${message}</div>`);
-                    $('#message-input').val('');
+                let currentMenuState = null; // Track current menu state
         
+                function displayMenu(menuOptions, menuKey) {
+                    let menuHtml = '<div class="menu-options">';
+                    if(menuKey === 'submenu'){
+                        menuHtml += `<ol type="I">`
+                    }
+                    menuOptions.forEach(option => {
+                        menuHtml += `<button class="menu-option-button" data-value="${option.value}" data-key="${menuKey}">${option.label}</button>`;
+                        if(menuKey === 'submenu'){
+                            menuHtml += `<li></li>`
+                        }
+        
+                    });
+                    if(menuKey === 'submenu'){
+                        menuHtml += `</ol>`
+                    }
+        
+                    menuHtml += '</div>';
+                    $('#chat-body').append(`<br><div class="bot-message chat-message">${menuHtml}</div>`);
+                    $('.menu-option-button').click(handleMenuSelection);
+                    $('#chat-body').scrollTop($('#chat-body')[0].scrollHeight);
+                }
+        
+                function handleMenuSelection() {
+                    const selectedValue = $(this).data('value');
+                    const menuKey = $(this).data('key');
+                    $('#chat-body').append(`<br><div class="user-message chat-message">user :${$(this).text()}</div>`);
+        
+                    if (menuKey === 'main') {
+                        if (selectedValue === 'company') {
+                            // Submenu for Company Details
+                            currentMenuState = { type: 'submenu', parent: 'company' };
+                            displayMenu([
+                                { label: 'About Us', value: 'about' },
+                                { label: 'Our Mission', value: 'mission' },
+                                { label: 'Our Team', value: 'team' },
+                                { label: 'Back to Main Menu', value: 'mainmenu' }
+                            ], 'submenu');
+                        } else if (selectedValue === 'services') {
+                            // Submenu for Our Services
+                            currentMenuState = { type: 'submenu', parent: 'services' };
+                            displayMenu([
+                                { label: 'Service 1', value: 'service1' },
+                                { label: 'Service 2', value: 'service2' },
+                                { label: 'Service 3', value: 'service3' },
+                                { label: 'Back to Main Menu', value: 'mainmenu' }
+                            ], 'submenu');
+                        } else if (selectedValue === 'contact') {
+                            // Submenu for Contact Us
+                            currentMenuState = { type: 'submenu', parent: 'contact' };
+                            displayMenu([
+                                { label: 'Email', value: 'email' },
+                                { label: 'Phone', value: 'phone' },
+                                { label: 'Address', value: 'address' },
+                                { label: 'Back to Main Menu', value: 'mainmenu' }
+                            ], 'submenu');
+                        }
+                    } else if (menuKey === 'submenu') {
+                        if(selectedValue === 'mainmenu'){
+                            displayMainMenu();
+                        } else {
+                            sendApiRequest(selectedValue);
+                            currentMenuState = null;
+                        }
+        
+                    }
+                }
+        
+                function sendMessage() {
+                    const message = $('#message-input').val().trim();
+                    if (message) {
+                        $('#chat-body').append(`<br><div class="user-message chat-message">user :${message}</div>`);
+                        $('#message-input').val('');
+                        sendApiRequest(message);
+                    } else {
+                        if(!currentMenuState){
+                            displayMainMenu();
+                        }
+                    }
+                }
+        
+                function displayMainMenu() {
+                    currentMenuState = { type: 'main' };
+                    displayMenu([
+                        { label: 'Company Details', value: 'company' },
+                        { label: 'Our Services', value: 'services' },
+                        { label: 'Contact Us', value: 'contact' }
+                    ], 'main');
+                }
+        
+                function sendApiRequest(message) {
                     $.ajax({
                         url: 'get_bot_response/', // Replace with your Django URL
                         type: 'POST',
                         data: { 'message': message, 'csrfmiddlewaretoken': '{{ csrf_token }}' },
                         dataType: 'json',
                         success: function(response) {
-                            $('#chat-body').append(`<div class="bot-message chat-message">${response.bot_response}</div>`);
+                            $('#chat-body').append(`<br><div class="bot-message chat-message">${response.bot_response}</div>`);
                             $('#chat-body').scrollTop($('#chat-body')[0].scrollHeight);
                         },
                         error: function(xhr, status, error) {
                             console.error("Error fetching bot response:", status, error);
-                            $('#chat-body').append(`<div class="bot-message chat-message">Sorry, I encountered an error. Please try again later.</div>`);
+                            $('#chat-body').append(`<br><div class="bot-message chat-message">Sorry, I encountered an error. Please try again later.</div>`);
                             $('#chat-body').scrollTop($('#chat-body')[0].scrollHeight);
                         },
-                        complete: function(){
-                          //this runs regardless of success or failure.
+                        complete: function() {
+                            //this runs regardless of success or failure.
                         }
                     });
                     $('#chat-body').scrollTop($('#chat-body')[0].scrollHeight);
                 }
-            }
-        });
-    </script>
+        
+                // Initial display of the main menu when the chat is opened
+                displayMainMenu();
+            });
+        </script>
 </section>
 
 

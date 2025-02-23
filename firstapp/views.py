@@ -35,7 +35,33 @@ def get_azureopenai_response(msg):
     # chain = LLMChain(llm=llm, prompt=prompt)
 
     # response_text = chain.run(message)
-    return "reply  "+msg
+    members=["Akshay ", "Gaurav"]
+    data={
+        "about":" We are the developers driving the technical backbone of our IT consulting and project initiatives. Our team brings deep expertise in a variety of technologies, allowing us to build robust and scalable solutions. We collaborate closely with our consulting team and clients to translate strategic visions into tangible, functional applications, ensuring every project meets and exceeds expectations.",
+        "mission":"Our mission is to deliver exceptional quality services that consistently exceed customer expectations. We are dedicated to providing value-driven solutions that empower our clients to achieve their goals, fostering long-term partnerships built on trust and satisfaction.",
+        "address":"xyz , city , state , pincode !!",
+        "email":"sample@company.com",
+        "phone":"xxx-xxx-xxxx",
+        "service1":"Expert IT consulting to streamline operations and enhance your competitive edge. We analyze your current infrastructure and deliver tailored solutions for growth.",
+        "service2":"We provide expert legal advisory, guiding clients through complex legal landscapes. Our alternative services offer innovative solutions, adapting to evolving legal and business needs.",
+        "service3":"Ensuring your systems run smoothly with proactive maintenance and rapid support. We minimize downtime, maximizing your operational efficiency."
+        }
+    msg=msg.strip()
+    if msg=='team':
+        st="<ul>"
+        for member in members:
+            st+=f"<li>{member}</li>"
+        st+="</ul>"
+        return st
+    else:
+        return data[msg]
+        # return data[msg]+"""<button class="menu-option-button btn btn-outline-warning" data-value="mainmenu" data-key="submenu" fdprocessedid="wtlikr">Back to Main Menu</button>"""
+    
+
+    
+
+        
+    return "reply for  "+msg
 
 def get_bot_response(request):
     messages = ChatMessage.objects.all() 
@@ -57,12 +83,12 @@ def get_bot_response(request):
         if message:
             # Your bot logic here (replace with your actual implementation)
             # bot_response = f"bot: You said: {message}"  # Example response
-            ChatMessage.objects.create(sender='user', message=message).save() #save user msg
+            # ChatMessage.objects.create(sender='user', message=message).save() #save user msg
 
             bot_response = get_azureopenai_response(message)
             
-            if bot_response:
-                ChatMessage.objects.create(sender='bot', message=bot_response).save() #save bot responses
+            # if bot_response:
+                # ChatMessage.objects.create(sender='bot', message=bot_response).save() #save bot responses
             
             return JsonResponse({'bot_response': f"bot : {bot_response}"})
         else:

@@ -10,6 +10,24 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/bootstrap-chat.min.css" />
     <style>
+        .chat-container {
+            position: fixed;
+            bottom: 60px;
+            right: 20px;
+            width: 350px;
+            min-width: 200px;
+            min-height: 200px;
+            border: 1px solid #3d3200;
+            border-radius: 8px;
+            display: none;
+            flex-direction: column;
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            resize: both;
+            overflow: hidden; 
+            /* Prevent content overflow outside the container */
+        }
+    <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         .coming-soon-container { display: flex; height: 100vh; }
         .left-content { flex: 1; padding: 50px; display: flex; flex-direction: column; justify-content: center; }
@@ -20,13 +38,13 @@
         .social-icons a { margin-right: 15px; color: #333; }
         .copyright { margin-top: auto; }
         /* Chatbot Styles */
-        .chat-container { position: fixed; bottom: 60px; right: 20px; width: 350px; border: 1px solid #3d3200; border-radius: 8px; display: none; flex-direction: column; background-color: white; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); }
+        .chat-container { resize: vertical;overflow: inherit;position: fixed; bottom: 60px; right: 20px; width: 350px; border: 1px solid #3d3200; border-radius: 8px; display: none; flex-direction: column; background-color: white; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);}
         .chat-header { background-color: #ffaa00; color: rgb(0, 0, 0); padding: 0.5rem; display: flex; justify-content: space-between; align-items: center; }
         .chat-body { padding: 1rem; flex-grow: 1; overflow-y: auto; height: 300px; }
-        .chat-input { padding: 1rem; border-top: 1px solid #dee2e6; display: flex; }
+        .chat-input { padding: 1rem; border-top: 1px solid #dee2e6; display: flex; float: bottom;}
         .chat-message { margin-bottom: 0.5rem; padding: 0.75rem; border-radius: 0.25rem; display: inline-block; max-width: 80%; }
         .user-message { background-color: #c8f2f8; align-self: flex-end;  float: right;}
-        .bot-message { background-color: #faee9c; align-self: flex-start; } 
+        .bot-message { background-color: #fff9d3; align-self: flex-start; } 
         
         .chat-toggle { position: fixed; bottom: 20px; right: 20px; border-radius: 50%; z-index: 1000; }/* Responsive Adjustments */
         @media (min-width: 500px) {
@@ -75,6 +93,7 @@
         <div class="chat-container ">
             <div class="chat-header bg-warning  p-2 d-flex justify-content-between align-items-center">
                 <span>Support Chat</span>
+                
                 <button class="close-chat btn-close btn-close-white" aria-label="Close"></button>
             </div>
             <div class="chat-body" id="chat-body">
@@ -92,23 +111,111 @@
         </div>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-        <script >
-        $(document).ready(function() {
-            $('.chat-toggle').click(function() {
-                $('.chat-container').toggle();
-            });
-            $('.close-chat').click(function() {
-                $('.chat-container').hide();
-            });
-            $('#send-button').click(sendMessage);
-            $('#message-input').keypress(function(e) { if (e.key === 'Enter') sendMessage(); });
         
-            function sendMessage() {
-                const message = $('#message-input').val().trim();
-                if (message) {
-                    $('#chat-body').append(`<br><div class="user-message chat-message">user :${message}</div>`);
-                    $('#message-input').val('');
+
+        <script>
+            $(document).ready(function() {
+                $('.chat-toggle').click(function() {
+                    $('.chat-container').toggle();
+                });
+                $('.close-chat').click(function() {
+                    $('.chat-container').hide();
+                });
+                $('#send-button').click(sendMessage);
+                $('#message-input').keypress(function(e) { if (e.key === 'Enter') sendMessage(); });
         
+                let currentMenuState = null; // Track current menu state
+        
+                function displayMenu(menuOptions, menuKey) {
+                    let menuHtml = '<div class="menu-options ">';
+                    if(menuKey === 'submenu'){
+                        menuHtml += ``
+                    }
+                    menuOptions.forEach(option => {
+                        menuHtml += `<br><br><button class="menu-option-button btn btn-outline-warning"  data-value="${option.value}" data-key="${menuKey}">${option.label}</button>`;
+                        if(menuKey === 'submenu'){
+                            menuHtml += ``
+                        }
+        
+                    });
+                    if(menuKey === 'submenu'){
+                        menuHtml += ``
+                    }
+        
+                    menuHtml += '</div>';
+                    $('#chat-body').append(`<br><div class="bot-message chat-message">${menuHtml}</div>`);
+                    $('.menu-option-button').click(handleMenuSelection);
+                    $('#chat-body').scrollTop($('#chat-body')[0].scrollHeight);
+                }
+        
+                function handleMenuSelection() {
+                    const selectedValue = $(this).data('value');
+                    const menuKey = $(this).data('key');
+                    $('#chat-body').append(`<br><div class="user-message chat-message">user :${$(this).text()}</div>`);
+        
+                    if (menuKey === 'main') {
+                        if (selectedValue === 'company') {
+                            // Submenu for Company Details
+                            currentMenuState = { type: 'submenu', parent: 'company' };
+                            displayMenu([
+                                { label: 'About Us', value: 'about' },
+                                { label: 'Our Mission', value: 'mission' },
+                                { label: 'Our Team', value: 'team' },
+                                { label: 'Back to Main Menu', value: 'mainmenu' }
+                            ], 'submenu');
+                        } else if (selectedValue === 'services') {
+                            // Submenu for Our Services
+                            currentMenuState = { type: 'submenu', parent: 'services' };
+                            displayMenu([
+                                { label: 'IT Consulting', value: 'service1' },
+                                { label: 'Auditing', value: 'service2' },
+                                { label: 'Maintance & Support', value: 'service3' },
+                                { label: 'Back to Main Menu', value: 'mainmenu' }
+                            ], 'submenu');
+                        } else if (selectedValue === 'contact') {
+                            // Submenu for Contact Us
+                            currentMenuState = { type: 'submenu', parent: 'contact' };
+                            displayMenu([
+                                { label: 'Email', value: 'email' },
+                                { label: 'Phone', value: 'phone' },
+                                { label: 'Address', value: 'address' },
+                                { label: 'Back to Main Menu', value: 'mainmenu' }
+                            ], 'submenu');
+                        }
+                    } else if (menuKey === 'submenu') {
+                        if(selectedValue === 'mainmenu'){
+                            displayMainMenu();
+                        } else {
+                            sendApiRequest(selectedValue);
+                            currentMenuState = null;
+                        }
+        
+                    }
+                }
+        
+                function sendMessage() {
+                    const message = $('#message-input').val().trim();
+                    if (message) {
+                        $('#chat-body').append(`<br><div class="user-message chat-message">user :${message}</div>`);
+                        $('#message-input').val('');
+                        sendApiRequest(message);
+                    } else {
+                        if(!currentMenuState){
+                            displayMainMenu();
+                        }
+                    }
+                }
+        
+                function displayMainMenu() {
+                    currentMenuState = { type: 'main' };
+                    displayMenu([
+                        { label: 'Company Details', value: 'company' },
+                        { label: 'Our Services', value: 'services' },
+                        { label: 'Contact Us', value: 'contact' }
+                    ], 'main');
+                }
+        
+                function sendApiRequest(message) {
                     $.ajax({
                         url: 'get_bot_response/', // Replace with your Django URL
                         type: 'POST',
@@ -123,15 +230,17 @@
                             $('#chat-body').append(`<br><div class="bot-message chat-message">Sorry, I encountered an error. Please try again later.</div>`);
                             $('#chat-body').scrollTop($('#chat-body')[0].scrollHeight);
                         },
-                        complete: function(){
-                          //this runs regardless of success or failure.
+                        complete: function() {
+                            //this runs regardless of success or failure.
                         }
                     });
                     $('#chat-body').scrollTop($('#chat-body')[0].scrollHeight);
                 }
-            }
-        });
-    </script>
+        
+                // Initial display of the main menu when the chat is opened
+                displayMainMenu();
+            });
+        </script>
 </section>
 
 

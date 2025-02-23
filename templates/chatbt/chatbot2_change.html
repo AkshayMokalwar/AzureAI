@@ -8,7 +8,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/bootstrap-chat.min.css" />
     <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         .coming-soon-container { display: flex; height: 100vh; }
@@ -39,22 +38,79 @@
     </style>
 </head>
 <body class="container-fluid ">
-    {% if s_msg %}<div class="alert alert-success" role="alert">{{s_msg}}</div>{% endif %}
-    {% if f_msg %}<div class="alert alert-danger" role="alert">{{f_msg}}</div>{% endif %}
+    
+
     <div class="coming-soon-container row">
        
         <div class="left-content  col-lg-6 col-sm-12">
             <div class="logo"><img src="/static/chatbt/logo/logo.jpg" width="40%" class="mx-auto d-block"></div>
             <h1 class="text-center text-md-start">We are Coming Soon</h1>
             <p class="text-center text-md-start">You can subscribe to our mailing list so you can be notified when things are livelier</p>
-            <form class="subscribe-form" method="post">
+            <div id="alertContainer"  class="alert alert-warning alert-dismissible fade show" role="alert">
+                <strong>Holy guacamole!</strong> You should check in on some of those fields below.
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              
+            <form class="subscribe-form" id="subscribeForm">
                 {% csrf_token %}
                 <div class="mb-3">
                     <label for="email" class="form-label">Email</label>
                     <input type="email" class="form-control" name="email" id="email" placeholder="example@gmail.com">
                 </div>
-                <button type="submit" class="btn btn-warning d-block mx-auto mx-md-0">Join Now</button>
+                <button type="button" id="submitButton" class="btn btn-warning d-block mx-auto mx-md-0">Join Now</button>
             </form>
+            
+            <script>
+                document.getElementById('submitButton').addEventListener('click', function(event) {
+                    event.preventDefault(); // Prevent default form submission
+            
+                    const form = document.getElementById('subscribeForm');
+                    const formData = new FormData(form);
+            
+                    fetch('store_response/', { // Replace '/your-django-view-url/' with your actual view URL
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest', // Important for Django AJAX handling
+                        }
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            return response.json(); // or response.text() if you're returning a string
+                        } else {
+                            throw new Error('Network response was not ok.');
+                        }
+                    })
+                    .then(data => {
+                        // Handle successful response
+                        console.log('Success:', data);
+                            // Example: Display a success message
+                        // alert(data.message || "Subscription successful!"); //if the response contains a message key.
+                        //clear the form
+                        document.getElementById('email').value = "";
+                        
+                        document.getElementById('alertContainer').className ="alert-success";
+                        document.getElementById('alertContainer').value ="data.messageThank you for subscribing! Email added successfuly";
+
+                        
+                        document.getElementById('alertContainer').type ="visible";
+
+
+
+                    })
+                    .catch(error => {
+                        // Handle error
+                        console.error('Error:', error);
+
+                            // Example: Display a success message
+                        
+                        // Example: Display an error message
+                        alert('An error occurred. Please try again.');
+                    });
+                });
+            </script>
             <div class="social-icons text-center text-md-start">
                 You can also follow us on
                 <a href="#" target="_blank"><i class="fab fa-facebook-f" style="color: #1877F2;"></i></a>
@@ -107,7 +163,7 @@
                 $('.chat-container').toggle();
             });
             $('.close-chat').click(function() {
-                $('.chat-container').hide();
+                    
             });
             $('#send-button').click(sendMessage);
             $('#message-input').keypress(function(e) { if (e.key === 'Enter') sendMessage(); });

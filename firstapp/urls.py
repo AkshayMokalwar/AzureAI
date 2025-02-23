@@ -6,7 +6,8 @@ urlpatterns = [
     path('', views.comming_soon, name='home'),
     # path('home/', views.chatbot_view, name='chatbot'),
     # path('test2/', views.chatbot, name='chatbot'),
-    path('get_bot_response/',views.get_bot_response)
+    path('get_bot_response/',views.get_bot_response),
+    path('store_response/',views.store_email)
 
 ]
 

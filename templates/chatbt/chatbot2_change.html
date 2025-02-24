@@ -33,11 +33,13 @@
         </style>
     <style>
         .coming-soon-container { display: flex; height: 100vh; }
-        .left-content { flex: 1; padding: 50px; display: flex; flex-direction: column; text-align: left; }
+        .left-content { flex: 1; padding: 50px; display: flex; flex-direction: column; text-align: left;}
         .right-content { flex: 1; background-image: url('/static/chatbt/bg/bgimage.jpg'); background-size: cover; background-position: center; }
-        .logo { font-size: 2rem; font-weight: bold; margin-bottom: 30px; }
+        .logo { font-size: 2rem; font-weight: bold; margin-left: 20%; }
         .subscribe-form { margin-top: 30px; }
         .social-icons { margin-top: 30px; font-size: 1.5rem; }
+        .social-icons a { margin-left: 20px; }
+
         .social-icons a { margin-right: 15px; color: #333; }
         .copyright { margin-top: auto; }
         /* Chatbot Styles */
@@ -64,28 +66,30 @@
     {% if f_msg %}<div class="alert alert-danger" role="alert">{{f_msg}}</div>{% endif %}
     <div class="coming-soon-container row">
        
-        <div class="left-content  col-lg-6 col-sm-12">
-            <div class="logo"><img src="/static/chatbt/logo/logo.jpg" width="40%" class=" d-block"></div>
-            <h1 class="text-left text-md-start">We are Coming Soon</h1>
-            <p class="text-left text-md-start">You can subscribe to our mailing list so you can be notified when things are livelier</p>
+        <div class="left-content  col-lg-6 col-sm-12" >
+            <div class="logo"><img src="/static/chatbt/logo/logo.jpg" style="margin-left: 20%; " width="40%" class=" d-block"></div>
+            <h1 class="text-left text-lg-start" style="margin-left: 20%;font-weight: bold;font-size: 350%;">We are <br> Coming Soon</h1>
+            <p class="text-left text-md-start" style="margin-left: 20%;font-size: 160%;width:60%;">You can subscribe to our mailing list so you can be notified when things are livelier</p>
             <form class="subscribe-form" method="post">
                 {% csrf_token %}
                 <div class="mb-3">
-                    <label for="email" class="form-label">Email</label>
-                    <input type="email" class="form-control" name="email" id="email" placeholder="example@gmail.com">
+                    <label for="email" class="form-label" style="margin-left: 20%; " >Email</label>
+                    <input type="email" class="form-control col-sm-6" style="margin-left: 20%; " name="email" id="email" placeholder="example@gmail.com">
                 </div>
-                <button type="submit" class="btn btn-warning d-block mx-md-0">Join Now</button>
+                <button type="submit" class="btn btn-warning col-sm-6" style="margin-left: 20%; " >Join Now</button>
             </form>
-            <div class="social-icons text-left text-md-start">
-                You can also follow us on
-                <a href="#" target="_blank"><i class="fab fa-facebook-f" style="color: #1877F2;"></i></a>
-                <a href="#" target="_blank"><i class="fab fa-twitter" style="color: #1DA1F2;"></i></a>
-                <a href="#" target="_blank"><i class="fab fa-snapchat-ghost" style="color: #FFFC00;"></i></a>
-                <a href="#" target="_blank"><i class="fab fa-instagram" style="color: #E1306C;"></i></a>
-                <a href="#" target="_blank"><i class="fab fa-linkedin-in" style="color: #0A66C2;"></i></a>
-                <a href="#" target="_blank"><i class="fab fa-github" style="color: #333;"></i></a>
-            </div>
-            <div class="copyright text-left text-md-start">&copy; Copyrights Qlaws | All Rights Reserved</div>
+            
+            <div class="copyright text-center text-md-start">
+                <div class="social-icons text-center text-md-start" >
+                    You can also follow us on
+                    <a href="#" target="_blank"><i class="fab fa-facebook-f" style="color: #1877F2;"></i></a>
+                    <a href="#" target="_blank"><i class="fab fa-twitter" style="color: #1DA1F2;"></i></a>
+                    <a href="#" target="_blank"><i class="fab fa-snapchat-ghost" style="color: #FFFC00;"></i></a>
+                    <a href="#" target="_blank"><i class="fab fa-instagram" style="color: #E1306C;"></i></a>
+                    <a href="#" target="_blank"><i class="fab fa-linkedin-in" style="color: #0A66C2;"></i></a>
+                    <a href="#" target="_blank"><i class="fab fa-github" style="color: #333;"></i></a>
+                </div><br>
+                &copy; Copyrights Qlaws | All Rights Reserved</div>
         </div>
         <div class="right-content col-lg-6
         +687 col-sm-12" style="background-image: url('/static/chatbt/bg/bgimage.jpg'); background-size: cover; background-position: center; min-height: 300px;"></div>
@@ -199,7 +203,7 @@
                 function sendMessage() {
                     const message = $('#message-input').val().trim();
                     if (message) {
-                        $('#chat-body').append(`<br><div class="user-message chat-message">user :${message}</div>`);
+                        $('#chat-body').append(`<br><div class="user-message chat-message">${message}</div>`);
                         $('#message-input').val('');
                         sendApiRequest(message);
                     } else {

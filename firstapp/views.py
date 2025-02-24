@@ -54,7 +54,8 @@ def get_azureopenai_response(msg):
         st+="</ul>"
         return st
     else:
-        return data[msg]
+        return f"<p >{data[msg]}</p>"
+    
         # return data[msg]+"""<button class="menu-option-button btn btn-outline-warning" data-value="mainmenu" data-key="submenu" fdprocessedid="wtlikr">Back to Main Menu</button>"""
     
 
@@ -90,7 +91,7 @@ def get_bot_response(request):
             # if bot_response:
                 # ChatMessage.objects.create(sender='bot', message=bot_response).save() #save bot responses
             
-            return JsonResponse({'bot_response': f"bot : {bot_response}"})
+            return JsonResponse({'bot_response': bot_response})
         else:
             return JsonResponse({'error': 'Message not provided.'}, status=400)
     else:

@@ -160,7 +160,7 @@
                 function handleMenuSelection() {
                     const selectedValue = $(this).data('value');
                     const menuKey = $(this).data('key');
-                    $('#chat-body').append(`<br><div class="user-message chat-message">user :${$(this).text()}</div>`);
+                    $('#chat-body').append(`<br><div class="user-message chat-message">${$(this).text()}</div>`);
         
                     if (menuKey === 'main') {
                         if (selectedValue === 'company') {

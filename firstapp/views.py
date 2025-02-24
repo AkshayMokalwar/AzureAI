@@ -48,21 +48,18 @@ def get_azureopenai_response(msg):
         }
     msg=msg.strip()
     if msg=='team':
-        st="<ul>"
+        st="<h5> Our Team Members :</h5><ul>"
         for member in members:
-            st+=f"<li>{member}</li>"
+            st+=f"<li><p>{member}</p></li>"
         st+="</ul>"
         return st
+    elif msg in data:
+        return f"<p>{data[msg]}</p>"
     else:
-        return f"<p >{data[msg]}</p>"
+        return "<p> Logic will be added soon</p>"
     
         # return data[msg]+"""<button class="menu-option-button btn btn-outline-warning" data-value="mainmenu" data-key="submenu" fdprocessedid="wtlikr">Back to Main Menu</button>"""
-    
 
-    
-
-        
-    return "reply for  "+msg
 
 def get_bot_response(request):
     messages = ChatMessage.objects.all() 

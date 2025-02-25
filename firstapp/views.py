@@ -104,11 +104,13 @@ def comming_soon(request):
         if email:  # Basic validation
             sub=Subscriber.objects.create(email=email,subscribed_at=datetime.now())  # Create a new Subscriber object
             sub.save()
-            success_msg="Thank you for subscribing!"# or redirect, or render a success page
-            render(request, 'chatbt/chatbot2_change.html',{'s_msg':success_msg})
+            res={"msg":"Thank you for subscribing!","status":"success"}
+            print(res)
+            return render(request, 'chatbt/chatbot2_change.html',{'res':res})
         else:
-            failed_msg="Please enter a valid email."
-            render(request, 'chatbt/chatbot2_change.html',{'f_msg':failed_msg})
+            res={"msg":"Please enter a valid email.","status":"warning"}
+            print(res)
+            return render(request, 'chatbt/chatbot2_change.html',{'res':res})
     
     return render(request, 'chatbt/chatbot2_change.html',{'messages': messages})
 
